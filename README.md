@@ -12,7 +12,6 @@ Claude Code writes to append-only JSONL transcript files that get deleted after 
 - [Advanced & Novel Approaches](#advanced--novel-approaches)
 - [Observability & Monitoring](#observability--monitoring)
 - [General-Purpose Agent Memory](#general-purpose-agent-memory)
-- [Curated Indexes](#curated-indexes)
 - [Key Patterns](#key-patterns)
 
 ---
@@ -78,12 +77,6 @@ Projects focused on understanding what Claude Code is doing, not storing memorie
 | [disler/claude-code-hooks-multi-agent-observability](https://github.com/disler/claude-code-hooks-multi-agent-observability) | Real-time swarm monitoring: hooks → Bun server → SQLite → WebSocket → Vue dashboard. |
 | [TechNickAI/claude_telemetry](https://github.com/TechNickAI/claude_telemetry) | OpenTelemetry wrapper. <10ms overhead. Supports Logfire, Sentry, Honeycomb, Datadog. |
 | [nexus-labs-automation/agent-observability](https://github.com/nexus-labs-automation/agent-observability) | 14 observability skills: tracing, cost tracking, prompt versioning, guardrails. |
-
-## Curated Indexes
-
-| Project | Description |
-|---------|-------------|
-| [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) | 75+ repos organized by category. The broadest discovery resource for Claude Code tooling. |
 
 ---
 
