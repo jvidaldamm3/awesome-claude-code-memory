@@ -6,27 +6,14 @@ Claude Code writes to append-only JSONL transcript files that get deleted after 
 
 ## Contents
 
-- [Hook Collections & Frameworks](#hook-collections--frameworks)
 - [Deep Memory Systems](#deep-memory-systems)
 - [Graph-Based Memory](#graph-based-memory)
 - [Advanced & Novel Approaches](#advanced--novel-approaches)
 - [Observability & Monitoring](#observability--monitoring)
-- [General-Purpose Agent Memory](#general-purpose-agent-memory)
+- [Hook Collections & Frameworks](#hook-collections--frameworks)
 - [Key Patterns](#key-patterns)
 
 ---
-
-## Hook Collections & Frameworks
-
-Projects focused on Claude Code's hook system (lifecycle events that trigger shell commands).
-
-| Project | Stars | Storage | Retrieval | Description |
-|---------|-------|---------|-----------|-------------|
-| [disler/claude-code-hooks-mastery](https://github.com/disler/claude-code-hooks-mastery) | 3.3k | — | — | **Description:** Comprehensive educational resource covering all 13 hook lifecycle events.<br>**Innovation:** Security hooks, TTS, sub-agent orchestration patterns. |
-| [carlrannaberg/claudekit](https://github.com/carlrannaberg/claudekit) | 627 | Git stashes | Checkpoint restore | **Description:** TypeScript toolkit for Claude Code hooks.<br>**Innovation:** `file-guard`, `thinking-level` (reasoning prompts), `self-review` (auto-critique on file changes), hook profiling. |
-| [trailofbits/claude-code-config](https://github.com/trailofbits/claude-code-config) | 1.5k | — | — | **Description:** Security-focused hooks from a professional audit firm.<br>**Innovation:** Hooks as "structured prompt injection at opportune times." |
-| [karanb192/claude-code-hooks](https://github.com/karanb192/claude-code-hooks) | 241 | — | — | **Description:** Copy-paste shell scripts for Claude Code hooks.<br>**Innovation:** Block dangerous commands, protect secrets, auto-stage git changes. |
-| [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) | 69.8k | JSONL + Markdown | Pattern detection | **Description:** Agent harness for Claude Code. Won Cerebral Valley x Anthropic hackathon (Feb 2026).<br>**Innovation:** "Instincts" — auto-learned debugging skills stored as YAML-frontmatter markdown, promoted across projects. |
 
 ## Deep Memory Systems
 
@@ -77,6 +64,18 @@ Projects focused on understanding what Claude Code is doing, not storing memorie
 | [disler/claude-code-hooks-multi-agent-observability](https://github.com/disler/claude-code-hooks-multi-agent-observability) | 1.3k | SQLite | — | **Description:** Real-time swarm monitoring for multi-agent Claude Code setups.<br>**Innovation:** Hooks → Bun server → SQLite → WebSocket → Vue dashboard pipeline. |
 | [TechNickAI/claude_telemetry](https://github.com/TechNickAI/claude_telemetry) | 18 | OpenTelemetry | — | **Description:** OpenTelemetry wrapper for Claude Code with <10ms overhead.<br>**Innovation:** Supports Logfire, Sentry, Honeycomb, Datadog out of the box. |
 | [nexus-labs-automation/agent-observability](https://github.com/nexus-labs-automation/agent-observability) | 3 | — | — | **Description:** 14 observability skills for Claude Code agents (plugin, not standalone).<br>**Innovation:** Tracing, cost tracking, prompt versioning, guardrails. Integrates with 10 vendors. |
+
+## Hook Collections & Frameworks
+
+Projects focused on Claude Code's hook system (lifecycle events that trigger shell commands).
+
+| Project | Stars | Storage | Retrieval | Description |
+|---------|-------|---------|-----------|-------------|
+| [disler/claude-code-hooks-mastery](https://github.com/disler/claude-code-hooks-mastery) | 3.3k | — | — | **Description:** Comprehensive educational resource covering all 13 hook lifecycle events.<br>**Innovation:** Security hooks, TTS, sub-agent orchestration patterns. |
+| [carlrannaberg/claudekit](https://github.com/carlrannaberg/claudekit) | 627 | Git stashes | Checkpoint restore | **Description:** TypeScript toolkit for Claude Code hooks.<br>**Innovation:** `file-guard`, `thinking-level` (reasoning prompts), `self-review` (auto-critique on file changes), hook profiling. |
+| [trailofbits/claude-code-config](https://github.com/trailofbits/claude-code-config) | 1.5k | — | — | **Description:** Security-focused hooks from a professional audit firm.<br>**Innovation:** Hooks as "structured prompt injection at opportune times." |
+| [karanb192/claude-code-hooks](https://github.com/karanb192/claude-code-hooks) | 241 | — | — | **Description:** Copy-paste shell scripts for Claude Code hooks.<br>**Innovation:** Block dangerous commands, protect secrets, auto-stage git changes. |
+| [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) | 69.8k | JSONL + Markdown | Pattern detection | **Description:** Agent harness for Claude Code. Won Cerebral Valley x Anthropic hackathon (Feb 2026).<br>**Innovation:** "Instincts" — auto-learned debugging skills stored as YAML-frontmatter markdown, promoted across projects. |
 
 ---
 
