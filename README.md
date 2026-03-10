@@ -20,9 +20,9 @@ Claude Code writes to append-only JSONL transcript files that get deleted after 
 
 Projects focused on Claude Code's hook system (lifecycle events that trigger shell commands).
 
-| Project | Stars | Description |
-|---------|-------|-------------|
-| [disler/claude-code-hooks-mastery](https://github.com/disler/claude-code-hooks-mastery) | 3k+ | Comprehensive educational resource covering all 13 hook lifecycle events. Security hooks, TTS, sub-agent orchestration. |
+| Project | Storage | Description |
+|---------|---------|-------------|
+| [disler/claude-code-hooks-mastery](https://github.com/disler/claude-code-hooks-mastery) | — | Comprehensive educational resource covering all 13 hook lifecycle events. Security hooks, TTS, sub-agent orchestration. |
 | [carlrannaberg/claudekit](https://github.com/carlrannaberg/claudekit) | — | TypeScript toolkit: `file-guard`, `thinking-level` (reasoning prompts), `self-review` (auto-critique on file changes), hook profiling. |
 | [trailofbits/claude-code-config](https://github.com/trailofbits/claude-code-config) | — | Security-focused hooks from a professional audit firm. Philosophy: hooks as "structured prompt injection at opportune times." |
 | [karanb192/claude-code-hooks](https://github.com/karanb192/claude-code-hooks) | — | Copy-paste shell scripts: block dangerous commands, protect secrets, auto-stage git changes. |
@@ -32,8 +32,8 @@ Projects focused on Claude Code's hook system (lifecycle events that trigger she
 
 Hook-driven projects that give Claude Code persistent memory across sessions.
 
-| Project | Storage | Key Innovation |
-|---------|---------|----------------|
+| Project | Storage | Description |
+|---------|---------|-------------|
 | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | SQLite + Chroma | 3-layer progressive disclosure (index → timeline → full), ~10x token savings. All 6 lifecycle hooks. |
 | [zilliztech/memsearch](https://github.com/zilliztech/memsearch) | Markdown + Milvus | By Zilliz (Milvus makers). Markdown-first, Milvus as derived cache. Hybrid BM25+vector via RRF. |
 | [rlancemartin/claude-diary](https://github.com/rlancemartin/claude-diary) | Markdown | Generative Agents-inspired. PreCompact hook → diary entries → reflection → rules injected into CLAUDE.md. |
@@ -49,7 +49,7 @@ Hook-driven projects that give Claude Code persistent memory across sessions.
 
 Projects that model memory as entity-relationship graphs.
 
-| Project | Backend | Key Feature |
+| Project | Storage | Description |
 |---------|---------|-------------|
 | [amarodeabreu/claude-graph-memory](https://github.com/amarodeabreu/claude-graph-memory) | Neo4j | 100% local. Browse graph at localhost:7474. MCP tools for store/retrieve/cypher. |
 | [blas0/Severance](https://github.com/blas0/Severance) | Custom graph | CAM (Cross-session Adaptive Memory) — auto-builds concept relationship graphs via hooks. |
@@ -60,23 +60,23 @@ Projects that model memory as entity-relationship graphs.
 
 Projects with distinctive architectures or research contributions.
 
-| Project | What Makes It Unique |
-|---------|---------------------|
-| [samvallad33/vestige](https://github.com/samvallad33/vestige) | 22MB Rust binary, 29 cognitive modules. FSRS-6 spaced repetition (forgetting curves), HyDE query expansion, prediction error gating (only stores surprising info), "memory dreaming" consolidation. 3D visualization dashboard. |
-| [zircote/MIF](https://github.com/zircote/MIF) | Open standard for AI memory interchange. Dual format: Markdown + JSON-LD. W3C PROV provenance tracking. Goal: interoperability between memory providers. |
-| [zircote/git-notes-memory](https://github.com/zircote/git-notes-memory) | Memories stored as git notes — sync with `git push/pull`. 10 named namespaces. Hybrid BM25+vector via sqlite-vec. |
-| [letta-ai/letta-code](https://github.com/letta-ai/letta-code) | MemGPT-based: single persistent agent that survives across sessions. `/skill` extracts reusable patterns. Model-agnostic. |
-| [mem0ai/mem0](https://github.com/mem0ai/mem0) | General-purpose agent memory (+26% over OpenAI Memory on LOCOMO). OpenMemory MCP: fully local with Qdrant + Ollama. |
+| Project | Storage | Description |
+|---------|---------|-------------|
+| [samvallad33/vestige](https://github.com/samvallad33/vestige) | SQLite + sqlite-vec | 22MB Rust binary, 29 cognitive modules. FSRS-6 spaced repetition, HyDE query expansion, prediction error gating, "memory dreaming" consolidation. 3D dashboard. |
+| [zircote/MIF](https://github.com/zircote/MIF) | Markdown + JSON-LD | Open standard for AI memory interchange. W3C PROV provenance tracking. Goal: interoperability between memory providers. |
+| [zircote/git-notes-memory](https://github.com/zircote/git-notes-memory) | Git notes + sqlite-vec | Memories stored as git notes — sync with `git push/pull`. 10 named namespaces. Hybrid BM25+vector. |
+| [letta-ai/letta-code](https://github.com/letta-ai/letta-code) | Letta server | MemGPT-based: single persistent agent that survives across sessions. `/skill` extracts reusable patterns. Model-agnostic. |
+| [mem0ai/mem0](https://github.com/mem0ai/mem0) | Qdrant + Ollama | General-purpose agent memory (+26% over OpenAI Memory on LOCOMO). OpenMemory MCP: fully local. |
 
 ## Observability & Monitoring
 
 Projects focused on understanding what Claude Code is doing, not storing memories.
 
-| Project | Description |
-|---------|-------------|
-| [disler/claude-code-hooks-multi-agent-observability](https://github.com/disler/claude-code-hooks-multi-agent-observability) | Real-time swarm monitoring: hooks → Bun server → SQLite → WebSocket → Vue dashboard. |
-| [TechNickAI/claude_telemetry](https://github.com/TechNickAI/claude_telemetry) | OpenTelemetry wrapper. <10ms overhead. Supports Logfire, Sentry, Honeycomb, Datadog. |
-| [nexus-labs-automation/agent-observability](https://github.com/nexus-labs-automation/agent-observability) | 14 observability skills: tracing, cost tracking, prompt versioning, guardrails. |
+| Project | Storage | Description |
+|---------|---------|-------------|
+| [disler/claude-code-hooks-multi-agent-observability](https://github.com/disler/claude-code-hooks-multi-agent-observability) | SQLite | Real-time swarm monitoring: hooks → Bun server → SQLite → WebSocket → Vue dashboard. |
+| [TechNickAI/claude_telemetry](https://github.com/TechNickAI/claude_telemetry) | OpenTelemetry | OpenTelemetry wrapper. <10ms overhead. Supports Logfire, Sentry, Honeycomb, Datadog. |
+| [nexus-labs-automation/agent-observability](https://github.com/nexus-labs-automation/agent-observability) | — | 14 observability skills: tracing, cost tracking, prompt versioning, guardrails. |
 
 ---
 
