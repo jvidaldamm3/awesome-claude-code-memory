@@ -1,10 +1,8 @@
 # Awesome Claude Code Memory [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-> A curated list of projects giving Claude Code persistent memory, with search and retrieval analysis.
+> A curated list of projects giving Claude Code persistent memory.
 
 Claude Code writes to append-only JSONL transcript files that get deleted after ~30 days. It has no built-in persistent memory across sessions. These projects fix that — through hooks, MCP servers, vector databases, knowledge graphs, and novel cognitive architectures.
-
-This list goes beyond cataloging: it includes [analysis of search and retrieval approaches](#search--retrieval-analysis) based on real-world experiments with hybrid vector search at memory scale.
 
 ## Contents
 
@@ -15,7 +13,6 @@ This list goes beyond cataloging: it includes [analysis of search and retrieval 
 - [Observability & Monitoring](#observability--monitoring)
 - [General-Purpose Agent Memory](#general-purpose-agent-memory)
 - [Curated Indexes](#curated-indexes)
-- [Search & Retrieval Analysis](#search--retrieval-analysis)
 - [Key Patterns](#key-patterns)
 
 ---
@@ -48,7 +45,6 @@ Hook-driven projects that give Claude Code persistent memory across sessions.
 | [raoulbia-ai/claude-recall](https://github.com/raoulbia-ai/claude-recall) | SQLite | Correction detector classifies user feedback via Haiku + regex. No vectors — pattern matching only. |
 | [yuvalsuede/memory-mcp](https://github.com/yuvalsuede/memory-mcp) | JSON + CLAUDE.md | Two-tier: top ~150 lines ranked by confidence in CLAUDE.md, full store in .memory/state.json. ~$0.05/day. |
 | [memvid/claude-brain](https://github.com/memvid/claude-brain) | Single `.mv2` file | Native Rust, sub-millisecond ops, no DB. Portable file you can git commit. |
-| [jvidal/fastmem4claude](https://github.com/jvidal/fastmem4claude) | Qdrant + SQLite | Semantic search over transcripts. Nomic dense + SPLADE sparse vectors, adaptive fusion, auto-grouping by metadata concentration. |
 
 ## Graph-Based Memory
 
@@ -88,91 +84,6 @@ Projects focused on understanding what Claude Code is doing, not storing memorie
 | Project | Description |
 |---------|-------------|
 | [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) | 75+ repos organized by category. The broadest discovery resource for Claude Code tooling. |
-
----
-
-## Search & Retrieval Analysis
-
-Most memory projects that go beyond flat markdown files need a retrieval mechanism. The dominant approaches are BM25, vector similarity, and hybrid fusion. Here's what we found building and testing these approaches at memory scale (~1K-5K exchanges).
-
-### The problem with standard RRF at memory scale
-
-Reciprocal Rank Fusion (RRF) with k=60 is the standard for combining dense (semantic) and sparse (keyword) search signals. It was validated on TREC-scale datasets (100K+ documents). At memory scale, it has a specific failure mode:
-
-**When one signal is flat, RRF dilutes the strong signal.**
-
-Real example — query: *"projects AI claude code memory"*
-
-```
-Dense:  max=0.785  min=0.666  spread=15.2%  → discriminative
-Sparse: max=168.2  min=164.1  spread=2.5%   → flat noise
-```
-
-The dense signal clearly separates relevant from irrelevant results. The sparse signal scores everything nearly the same — its ranking is essentially random. But RRF gives both equal weight, so random sparse rankings contaminate the good dense rankings.
-
-### Adaptive fusion: spread-weighted scoring
-
-Instead of fixed 50/50 weights, measure the **score spread** of each signal and weight proportionally:
-
-```
-spread       = (max_score - min_score) / max_score
-weight_dense = spread_dense / (spread_dense + spread_sparse)
-```
-
-For the example above: dense gets 86% weight, sparse gets 14%. For exact keyword queries (error messages, stack traces), sparse would get higher weight automatically.
-
-The full algorithm:
-1. Run dense and sparse as separate queries (3x oversampling)
-2. Compute spread per signal
-3. Min-max normalize each signal to [0, 1]
-4. Fuse: `score = w_dense * norm_dense + w_sparse * norm_sparse`
-5. Items appearing in only one list get 0.0 for the missing signal
-
-### Results
-
-| Method | Relevant results in top 10 |
-|--------|---------------------------|
-| RRF (server-side, k=60) | 5/10 |
-| Dense only | 6/10 |
-| **Adaptive fusion** | **7/10** |
-
-The key insight: an exchange that was RRF rank #2 (score 0.500) purely from sparse keyword match got correctly demoted to rank #9 (score 0.140) by adaptive fusion, because sparse had no discrimination power for that query.
-
-### Auto-grouping by metadata concentration
-
-Search results carry categorical metadata (session, project, date, tools). When results cluster strongly on a dimension, that clustering itself is the answer — the user is looking for a session or project, not a single exchange.
-
-**Concentration ratio** detects this:
-
-```
-concentration = max_group_hits / (total_hits / num_groups)
-```
-
-Uniform distribution = 1.0x. Higher = stronger clustering signal. Threshold: >2.0x.
-
-Real data (15 results):
-
-| Field | Top Group | Hits | Concentration |
-|-------|-----------|------|---------------|
-| project_path | hooks4claude | 11/15 | **3.7x** |
-| date | 2026-03-05 | 9/15 | **3.6x** |
-| session_id | d7d17c1f | 6/15 | **3.2x** |
-| tool_names | Read | 6/15 | 2.7x |
-| model | (empty) | 13/15 | 1.7x |
-
-When concentration is high, results are displayed grouped under readable headers instead of a flat ranked list. This immediately surfaces "6 hits from session cozy-riding-firefly" instead of making the user scan 15 individual rows.
-
-### Comparison of retrieval approaches
-
-| Approach | Used by | Strengths | Weaknesses |
-|----------|---------|-----------|------------|
-| **No retrieval** (flat markdown) | total-recall, claude-diary, yuvalsuede/memory-mcp | Zero infrastructure, git-friendly | Doesn't scale past ~50 memories, no semantic search |
-| **BM25 only** | raoulbia-ai/claude-recall | Exact keyword match, fast | Misses semantic similarity, vocabulary mismatch |
-| **Vector only** | claude-mem (Chroma), episodic-memory | Semantic understanding | Misses exact terms, identifiers, error messages |
-| **Hybrid BM25+vector (fixed RRF)** | memsearch, cortex, git-notes-memory | Covers both signals | Dilutes strong signal when one is flat |
-| **Hybrid adaptive fusion** | fastmem4claude | Weights signals by discrimination power | Requires client-side fusion (two queries instead of one) |
-| **Knowledge graph** | claude-graph-memory, Severance, memento-mcp | Relationship traversal, temporal queries | High infrastructure cost (Neo4j), complex ingestion |
-| **Attention decay** | claude-cognitive | Biomimetic, auto-prioritizes | Fragile tuning (decay rate, thresholds) |
 
 ---
 
